@@ -1,16 +1,13 @@
 package by.nintendo.controller;
 
-import by.nintendo.Dao.UserDao;
 import by.nintendo.entity.User;
 import by.nintendo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 
 @Controller
 @RequestMapping(path = "/user")
@@ -22,23 +19,59 @@ public class UserController {
     }
 
     @GetMapping
-    public ModelAndView sas(ModelAndView modelAndView){
-
+    public ModelAndView viewAddUser(ModelAndView modelAndView) {
         modelAndView.setViewName("addUser");
         return modelAndView;
     }
 
     @PostMapping
-    public ModelAndView addUser(User user, ModelAndView modelAndView){
+    public ModelAndView addUser(User user, ModelAndView modelAndView) {
         userService.save(user);
-        modelAndView.setViewName("index");
+        modelAndView.addObject("add", "User add.");
+        modelAndView.setViewName("addUser");
         return modelAndView;
     }
 
     @GetMapping(path = "/allUsers")
-    public ModelAndView allUsers(ModelAndView modelAndView){
-        modelAndView.addObject("all",userService.findAll());
+    public ModelAndView allUsers(ModelAndView modelAndView) {
+        modelAndView.addObject("all", userService.findAll());
         modelAndView.setViewName("allUsers");
+        return modelAndView;
+    }
+
+    @GetMapping(path = "/deleate")
+    public ModelAndView viewDelete(ModelAndView modelAndView) {
+        modelAndView.setViewName("deleateUser");
+        return modelAndView;
+    }
+
+    @PostMapping(path = "/deleate")
+    public ModelAndView deleate(User user, ModelAndView modelAndView) {
+        userService.deleteUser(user);
+        modelAndView.addObject("deleate", "User Deleate");
+        modelAndView.setViewName("deleateUser");
+        return modelAndView;
+    }
+
+    @GetMapping(path = "/find")
+    public ModelAndView viewFind(ModelAndView modelAndView) {
+        modelAndView.setViewName("findUser");
+        return modelAndView;
+    }
+
+    @PostMapping(path = "/findByLogin")
+    public ModelAndView findUserByLogin(String login, ModelAndView modelAndView) {
+        User byLogin = userService.findByLogin(login);
+        modelAndView.setViewName("findUser");
+        modelAndView.addObject("user", byLogin);
+        return modelAndView;
+    }
+
+    @PostMapping(path = "/findById")
+    public ModelAndView findUserById(Long id, ModelAndView modelAndView) {
+        User byId = userService.findById(id);
+        modelAndView.setViewName("findUser");
+        modelAndView.addObject("user", byId);
         return modelAndView;
     }
 

@@ -6,21 +6,32 @@ import by.nintendo.exception.UserNotFoundException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
 @ControllerAdvice
 public class ExceptionController {
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public String userno(UserAlreadyExistsException e, Model model){
-        model.addAttribute("errorMessage",e.getMessage());
-        return "errorPage";
+    public String userAlreadyExists(UserAlreadyExistsException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        return "addUser";
     }
+
     @ExceptionHandler(UserNotFoundException.class)
-    public String userno(UserNotFoundException e, Model model){
-        model.addAttribute("errorMessage",e.getMessage());
-        return "errorPage";
+    public String userNotFound(UserNotFoundException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        if (e.getLocalizedMessage().equals("User not found")) {
+            return "findUser";
+        } else {
+            return "deleateUser";
+        }
     }
+
     @ExceptionHandler(NotAllDataEnteredException.class)
-    public String userno(NotAllDataEnteredException e, Model model){
-        model.addAttribute("errorMessage",e.getMessage());
-        return "errorPage";
+    public String userNoAllData(NotAllDataEnteredException e, Model model) {
+        model.addAttribute("errorMessage", e.getMessage());
+        if(e.getMessage().equals("Not data entered")){
+            return "findUser";
+        }else {
+            return "addUser";
+        }
     }
 }
