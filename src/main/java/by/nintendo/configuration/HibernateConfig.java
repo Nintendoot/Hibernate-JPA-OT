@@ -1,6 +1,5 @@
 package by.nintendo.configuration;
 
-
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,7 +15,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackages = "by.nintendo")
-public class HibernateConfig {
+public class HibernateConfig{
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -24,7 +23,6 @@ public class HibernateConfig {
         sessionFactory.setPackagesToScan(
                 "by.nintendo.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
-
         return sessionFactory;
     }
 
@@ -53,7 +51,7 @@ public class HibernateConfig {
                 "hibernate.hbm2ddl.auto", "create-drop");
         hibernateProperties.setProperty(
                 "hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-
         return hibernateProperties;
     }
+
 }

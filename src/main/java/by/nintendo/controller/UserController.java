@@ -1,13 +1,12 @@
 package by.nintendo.controller;
 
-import by.nintendo.entity.User;
+import by.nintendo.entity.MyUser;
 import by.nintendo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
 
 @Controller
 @RequestMapping(path = "/user")
@@ -25,9 +24,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ModelAndView addUser(User user, ModelAndView modelAndView) {
+    public ModelAndView addUser(MyUser user, ModelAndView modelAndView) {
         userService.save(user);
-        modelAndView.addObject("add", "User add.");
         modelAndView.setViewName("addUser");
         return modelAndView;
     }
@@ -46,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/deleate")
-    public ModelAndView deleate(User user, ModelAndView modelAndView) {
+    public ModelAndView deleate(MyUser user, ModelAndView modelAndView) {
         userService.deleteUser(user);
         modelAndView.addObject("deleate", "User Deleate");
         modelAndView.setViewName("deleateUser");
@@ -61,7 +59,7 @@ public class UserController {
 
     @PostMapping(path = "/findByLogin")
     public ModelAndView findUserByLogin(String login, ModelAndView modelAndView) {
-        User byLogin = userService.findByLogin(login);
+        MyUser byLogin = userService.findByLogin(login);
         modelAndView.setViewName("findUser");
         modelAndView.addObject("user", byLogin);
         return modelAndView;
@@ -69,7 +67,7 @@ public class UserController {
 
     @PostMapping(path = "/findById")
     public ModelAndView findUserById(Long id, ModelAndView modelAndView) {
-        User byId = userService.findById(id);
+        MyUser byId = userService.findById(id);
         modelAndView.setViewName("findUser");
         modelAndView.addObject("user", byId);
         return modelAndView;

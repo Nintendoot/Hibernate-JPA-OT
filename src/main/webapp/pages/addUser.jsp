@@ -17,6 +17,9 @@
     <label for="user-password-label">Password
         <input type="text" id="user-password-label" name="password">
     </label><br>
+    <label for="user-role-label">Role
+        <input type="text" id="user-role-label" name="role">
+    </label><br>
     <button type="submit">Add</button>
 </form>
 <a href="/home">Back</a>

@@ -12,7 +12,11 @@ public class ExceptionController {
     @ExceptionHandler(UserAlreadyExistsException.class)
     public String userAlreadyExists(UserAlreadyExistsException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
-        return "addUser";
+        if (e.getLocalizedMessage().equals("Such a user already exists")) {
+            return "registration";
+        } else {
+            return "addUser";
+        }
     }
 
     @ExceptionHandler(UserNotFoundException.class)
@@ -20,17 +24,18 @@ public class ExceptionController {
         model.addAttribute("errorMessage", e.getMessage());
         if (e.getLocalizedMessage().equals("User not found")) {
             return "findUser";
-        } else {
-            return "deleateUser";
+        } else if (e.getLocalizedMessage().equals("Login Exist.")) {
+            return "registration";
         }
+        return "deleateUser";
     }
 
     @ExceptionHandler(NotAllDataEnteredException.class)
     public String userNoAllData(NotAllDataEnteredException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
-        if(e.getMessage().equals("Not data entered")){
+        if (e.getMessage().equals("Not data entered")) {
             return "findUser";
-        }else {
+        } else {
             return "addUser";
         }
     }

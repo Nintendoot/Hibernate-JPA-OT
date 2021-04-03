@@ -1,6 +1,6 @@
 package by.nintendo.Dao;
 
-import by.nintendo.entity.User;
+import by.nintendo.entity.MyUser;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -17,34 +17,36 @@ public class UserDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public void save (User user) {
+    public void save(MyUser user) {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.save(user);
     }
+
     @Transactional(readOnly = true)
-    public User findById (long id) {
+    public MyUser findById(long id) {
         Session currentSession = sessionFactory.getCurrentSession();
-        return currentSession.find(User.class, id);
+        return currentSession.find(MyUser.class, id);
     }
 
-    public void deleteUser (User user) {
+    public void deleteUser(MyUser user) {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.delete(user);
     }
 
     @Transactional(readOnly = true)
-    public List<User> findAll () {
+    public List<MyUser> findAll() {
         Session currentSession = sessionFactory.getCurrentSession();
         return
                 currentSession
-                        .createQuery("from User", User.class)
+                        .createQuery("from MyUser ", MyUser.class)
                         .getResultList();
     }
+
     @Transactional(readOnly = true)
-    public User findByLogin (String login) {
+    public MyUser findByLogin(String login) {
         Session currentSession = sessionFactory.getCurrentSession();
         return currentSession
-                .createQuery("from User where login = :login", User.class)
+                .createQuery("from MyUser where login = :login", MyUser.class)
                 .setParameter("login", login)
                 .getSingleResult();
     }
