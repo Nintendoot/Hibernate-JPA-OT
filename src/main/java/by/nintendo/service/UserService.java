@@ -2,6 +2,7 @@ package by.nintendo.service;
 
 import by.nintendo.Dao.UserDao;
 import by.nintendo.entity.MyUser;
+import by.nintendo.entity.Role;
 import by.nintendo.exception.NotAllDataEnteredException;
 import by.nintendo.exception.UserAlreadyExistsException;
 import by.nintendo.exception.UserNotFoundException;
@@ -30,6 +31,7 @@ public class UserService {
                 throw new UserAlreadyExistsException("User already exists");
             } else {
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
+                user.setRole(Role.USER);
                 userDao.save(user);
             }
 

@@ -12,11 +12,7 @@ public class ExceptionController {
     @ExceptionHandler(UserAlreadyExistsException.class)
     public String userAlreadyExists(UserAlreadyExistsException e, Model model) {
         model.addAttribute("errorMessage", e.getMessage());
-        if (e.getLocalizedMessage().equals("Such a user already exists")) {
-            return "registration";
-        } else {
-            return "addUser";
-        }
+      return "error";
     }
 
     @ExceptionHandler(UserNotFoundException.class)

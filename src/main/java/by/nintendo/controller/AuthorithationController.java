@@ -2,6 +2,7 @@ package by.nintendo.controller;
 
 import by.nintendo.entity.MyUser;
 import by.nintendo.service.RegistrationService;
+import by.nintendo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AuthorithationController {
 
     @Autowired
-    private RegistrationService registrationService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserService userService;
 
     @GetMapping(path = "/reg")
     public ModelAndView registView(ModelAndView modelAndView) {
@@ -28,9 +26,7 @@ public class AuthorithationController {
 
     @PostMapping(path = "/reg")
     public ModelAndView regist(MyUser user, ModelAndView modelAndView) {
-        if (!registrationService.findByLogin(user.getLogin())) {
-            registrationService.saveUser(user);
-        }
+            userService.save(user);
         modelAndView.setViewName("index");
         return modelAndView;
     }
